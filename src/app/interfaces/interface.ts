@@ -6,7 +6,7 @@ export interface IGameInfo {
   game_id?: number;
   game_name: string;
   game_keys: string[];
-  platform: string;
+  game_platform: string;
   purchase_price: number;
   sale_price: number;
   notes: string[];

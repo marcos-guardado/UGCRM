@@ -1,5 +1,119 @@
 <!-- <h2>Añadir {{ addGameForm | titlecase }}</h2> -->
 
 <div class="grid fluid addGameForm">
-  <form formGroup="addGameForm" (ngSubmit)="saveNewGame()"></form>
+  <div class="col-6">
+    <div>
+      <form [formGroup]="addGameForm" (ngSubmit)="saveNewGame()">
+        <div class="p-1 mt-1">
+          <div class="col-6">
+            <label>Juego</label>
+          </div>
+          <div class="grid col-6">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <p-dropdown
+              [editable]="true"
+              [options]="gamesAvailable"
+              optionLabel="game_name"
+              optionValue="game_name"
+              formControlName="game_name"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="p-col-12 p-md-4">
+          <div class="p-1 mt-1">
+            <div class="col-6">
+              <label>Plataforma</label>
+            </div>
+            <div class="grid col-6">
+              <span class="p-inputgroup-addon"
+                ><i class="pi pi-microsoft"></i
+              ></span>
+              <p-dropdown
+                [editable]="true"
+                [options]="platforms"
+                optionLabel="plat_name"
+                optionValue="plat_name"
+                formControlName="game_platform"
+              ></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="p-col-12 p-md-4">
+          <div class="p-1 mt-1">
+            <div class="col-6">
+              <label>Precio de compra</label>
+            </div>
+            <div class="grid col-6">
+              <span class="p-inputgroup-addon"
+                ><i class="pi pi-dollar"></i
+              ></span>
+              <input
+                formControlName="purchase_price"
+                type="text"
+                pInputText
+                placeholder="Precio de compra"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-12 p-md-4">
+          <div class="p-1 mt-1">
+            <div class="col-6">
+              <label>Precio de venta</label>
+            </div>
+            <div class="grid col-6">
+              <span class="p-inputgroup-addon"
+                ><i class="pi pi-dollar"></i
+              ></span>
+              <input
+                formControlName="sale_price"
+                type="text"
+                pInputText
+                placeholder="Precio de venta"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="p-col-12 p-md-4">
+          <div class="p-1 mt-1">
+            <div class="col-6">
+              <label>Claves</label>
+            </div>
+            <div class="grid col-6">
+              <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+              <p-chips
+                class="p-chips-token-label"
+                formControlName="game_keys"
+              ></p-chips>
+            </div>
+          </div>
+        </div>
+        <div class="p-col-12 p-md-4">
+          <div class="p-1 mt-1">
+            <div class="col-6">
+              <label>Notas</label>
+            </div>
+            <div class="grid col-6">
+              <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+              <p-chips
+                class="p-chips-token-label"
+                formControlName="notes"
+              ></p-chips>
+            </div>
+          </div>
+        </div>
+        <div class="p-col-12 p-md-4">
+          <div class="grid p-1 mt-1">
+            <button
+              (click)="saveNewGame()"
+              pButton
+              type="button"
+              label="Guardar Juego"
+            ></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-6"></div>
 </div>

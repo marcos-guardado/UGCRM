@@ -63,7 +63,7 @@ export class StockComponent implements OnInit {
             })
           )
           .subscribe((x: any) => {
-            console.log(x);
+            alert('Key eliminada');
           });
       },
       reject: () => {

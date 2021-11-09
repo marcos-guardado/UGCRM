@@ -12,7 +12,8 @@ import { ServiceService } from 'src/app/services/service.service';
         padding: 1rem;
       }
 
-      h2 {
+      label {
+        font-weight: bold;
         color: white;
       }
       span {
@@ -27,17 +28,18 @@ import { ServiceService } from 'src/app/services/service.service';
 })
 export class AddGameComponent implements OnInit {
   addGameForm = this.fb.group({
+    game_id: [0],
     game_name: ['', [Validators.required]],
-    codes: this.fb.array([], [Validators.required]),
-    purchase_price: [0, [Validators.required, Validators.min(0)]],
+    game_platform: ['', [Validators.required]],
     sale_price: [0, [Validators.required, Validators.min(0)]],
-    platform: ['', [Validators.required]],
-    notes: this.fb.array([], [Validators.required]),
+    purchase_price: [0, [Validators.required, Validators.min(0)]],
+    game_keys: [[], Validators.required],
+    notes: [[], Validators.required],
   });
 
   platforms = [{ plat_name: 'steam' }, { plat_name: 'origin' }];
   gamesAvailable: IGame[] = [];
-  newCode: string = '';
+  newKey: string = '';
   newNote: string = '';
 
   constructor(private _service: ServiceService, private fb: FormBuilder) {}
@@ -47,33 +49,6 @@ export class AddGameComponent implements OnInit {
       this.gamesAvailable = games;
     });
   }
-
-  // addNoteToGame(note: string) {
-  //   if (note === '' || note.length == 0) return;
-  //   this.newGame.notes.push(note);
-  //   this.newNote = '';
-  // }
-
-  // deleteNote(note: string) {
-  //   const newArrNotes: string[] = this.newGame.notes.filter((notes) => {
-  //     return notes != note;
-  //   });
-
-  //   this.newGame.notes = newArrNotes;
-  // }
-
-  // addCodeToGame(code: string) {
-  //   if (code === '' || code.length == 0) return;
-  //   this.newGame.codes.push(code);
-  //   this.newCode = '';
-  // }
-
-  // deleteCode(code: string) {
-  //   const newArrCodes: string[] = this.newGame.codes.filter((codes) => {
-  //     return codes != code;
-  //   });
-  //   this.newGame.codes = newArrCodes;
-  // }
 
   saveNewGame() {
     console.log(this.addGameForm);

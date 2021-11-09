@@ -9,10 +9,17 @@ import { AddGameComponent } from './add-game/add-game.component';
 
 import { AppModule } from '../app.module';
 import { ComponentsModule } from '../components/components.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [StockComponent, SoldComponent, AddGameComponent],
-  imports: [CommonModule, NgPrimeModule, FormsModule, ComponentsModule],
+  imports: [
+    CommonModule,
+    NgPrimeModule,
+    FormsModule,
+    ComponentsModule,
+    ReactiveFormsModule,
+  ],
   exports: [StockComponent, SoldComponent],
 })
 export class PagesModule {}
