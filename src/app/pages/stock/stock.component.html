@@ -1,0 +1,72 @@
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+></p-confirmDialog>
+
+<div class="mt-2">
+  <p-toolbar>
+    <div class="p-toolbar-group-right">
+      <button
+        [routerLink]="['/addGame']"
+        pButton
+        class="p-button-success"
+        label="Añadir juego"
+        icon="pi pi-plus"
+      ></button>
+    </div>
+  </p-toolbar>
+</div>
+
+<p-table [value]="data" class="mt-5 ml-2 mr-2" dataKey="game_id">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="game_name">
+        Nombre del Juego <i class="pi pi-sort-alpha-down"></i>
+      </th>
+      <th>Key</th>
+      <th>Plataforma</th>
+      <th>Adquirido en</th>
+      <th>Se vende en</th>
+      <th>Notas</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>{{ item.game_name | titlecase }}</td>
+      <td>
+        <ul>
+          <li *ngFor="let game_key of item.game_keys">
+            <div class="grid">
+              <div class="col-10">
+                {{ game_key }}
+              </div>
+              <div class="col-2">
+                <button
+                  (click)="copyKey(game_key)"
+                  pButton
+                  type="button"
+                  class="p-button-raised p-button-rounded p-button-sm"
+                  icon="pi pi-copy"
+                ></button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </td>
+      <td>{{ item.game_platform | titlecase }}</td>
+      <td>{{ item.purchase_price | currency }}</td>
+      <td>{{ item.sale_price | currency }}</td>
+      <td pEditableColumn *ngIf="item.notes.length > 0; else NoNotes">
+        <ul>
+          <li *ngFor="let note of item.notes">
+            {{ note | titlecase }}
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<ng-template #NoNotes>
+  <td>No hay notas</td>
+</ng-template>
