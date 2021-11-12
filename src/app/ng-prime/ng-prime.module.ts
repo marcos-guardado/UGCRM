@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { FieldsetModule } from 'primeng/fieldset';
+import { ChipsModule } from 'primeng/chips';
 
 @NgModule({
   imports: [CommonModule],
@@ -20,6 +21,7 @@ import { FieldsetModule } from 'primeng/fieldset';
     ConfirmDialogModule,
     ToolbarModule,
     FieldsetModule,
+    ChipsModule,
   ],
 })
 export class NgPrimeModule {}

@@ -4,6 +4,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import { switchMap } from 'rxjs/operators';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { Message } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stock',
@@ -17,6 +18,7 @@ export class StockComponent implements OnInit {
   msgs: Message[] = [];
 
   constructor(
+    private router: Router,
     private dataService: ServiceService,
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig
@@ -24,7 +26,10 @@ export class StockComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.loadData();
+  }
 
+  loadData() {
     this.dataService
       .getGames()
       .pipe(
@@ -63,7 +68,8 @@ export class StockComponent implements OnInit {
             })
           )
           .subscribe((x: any) => {
-            console.log(x);
+            alert('Key eliminada');
+            this.router.navigate([this.router.url]);
           });
       },
       reject: () => {

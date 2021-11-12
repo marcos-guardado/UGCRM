@@ -12,7 +12,8 @@ import { ServiceService } from 'src/app/services/service.service';
         padding: 1rem;
       }
 
-      h2 {
+      label {
+        font-weight: bold;
         color: white;
       }
       span {
@@ -26,19 +27,19 @@ import { ServiceService } from 'src/app/services/service.service';
   ],
 })
 export class AddGameComponent implements OnInit {
-  addGameForm = this.fb.group({
-    game_name: ['', [Validators.required]],
-    codes: this.fb.array([], [Validators.required]),
-    purchase_price: [0, [Validators.required, Validators.min(0)]],
-    sale_price: [0, [Validators.required, Validators.min(0)]],
-    platform: ['', [Validators.required]],
-    notes: this.fb.array([], [Validators.required]),
-  });
-
   platforms = [{ plat_name: 'steam' }, { plat_name: 'origin' }];
   gamesAvailable: IGame[] = [];
-  newCode: string = '';
+  newKey: string = '';
   newNote: string = '';
+
+  addGameForm = this.fb.group({
+    game_id: [0],
+    game_platform: ['', [Validators.required, Validators.minLength(1)]],
+    sale_price: [0, [Validators.required, Validators.min(0)]],
+    purchase_price: [0, [Validators.required, Validators.min(0)]],
+    game_keys: [[], Validators.required],
+    notes: [[], Validators.required],
+  });
 
   constructor(private _service: ServiceService, private fb: FormBuilder) {}
 
@@ -48,34 +49,51 @@ export class AddGameComponent implements OnInit {
     });
   }
 
-  // addNoteToGame(note: string) {
-  //   if (note === '' || note.length == 0) return;
-  //   this.newGame.notes.push(note);
-  //   this.newNote = '';
-  // }
+  generateNewGameObject() {
+    const {
+      game_id,
+      game_platform,
+      sale_price,
+      purchase_price,
+      game_keys,
+      notes,
+    } = this.addGameForm.controls;
 
-  // deleteNote(note: string) {
-  //   const newArrNotes: string[] = this.newGame.notes.filter((notes) => {
-  //     return notes != note;
-  //   });
+    const newGame = {
+      game_id: game_id.value,
+      game_name: '',
+      game_platform: game_platform.value,
+      sale_price: sale_price.value,
+      purchase_price: purchase_price.value,
+      game_keys: game_keys.value,
+      notes: notes.value,
+    };
 
-  //   this.newGame.notes = newArrNotes;
-  // }
+    const gameName = this.gamesAvailable.filter((game: any) => {
+      if (game.game_id === newGame.game_id) {
+        return game;
+      }
+    });
 
-  // addCodeToGame(code: string) {
-  //   if (code === '' || code.length == 0) return;
-  //   this.newGame.codes.push(code);
-  //   this.newCode = '';
-  // }
+    newGame.game_name = gameName[0].game_name;
 
-  // deleteCode(code: string) {
-  //   const newArrCodes: string[] = this.newGame.codes.filter((codes) => {
-  //     return codes != code;
-  //   });
-  //   this.newGame.codes = newArrCodes;
-  // }
+    return newGame;
+  }
 
   saveNewGame() {
-    console.log(this.addGameForm);
+    if (this.addGameForm.valid) {
+      const newGame = this.generateNewGameObject();
+      this._service.saveGame(newGame).subscribe((message) => {
+        alert(message);
+      });
+      this.addGameForm.reset();
+    }
+  }
+
+  isInvalidField(field: string) {
+    return (
+      this.addGameForm.controls[field].errors &&
+      this.addGameForm.controls[field].touched
+    );
   }
 }
