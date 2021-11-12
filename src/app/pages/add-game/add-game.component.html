@@ -8,15 +8,19 @@
           <div class="col-6">
             <label>Juego</label>
           </div>
+          <input formControlName="game_id" type="hidden" [value]="" />
           <div class="grid col-6">
             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
             <p-dropdown
               [editable]="true"
               [options]="gamesAvailable"
               optionLabel="game_name"
-              optionValue="game_name"
-              formControlName="game_name"
+              optionValue="game_id"
+              formControlName="game_id"
             ></p-dropdown>
+            <div *ngIf="isInvalidField('game_id')">
+              <p-tag severity="danger" value="El juego es requerido"></p-tag>
+            </div>
           </div>
         </div>
         <div class="p-col-12 p-md-4">
@@ -36,6 +40,12 @@
                 formControlName="game_platform"
               ></p-dropdown>
             </div>
+            <div *ngIf="isInvalidField('game_platform')">
+              <p-tag
+                severity="danger"
+                value="La plataforma es requerida"
+              ></p-tag>
+            </div>
           </div>
         </div>
         <div class="p-col-12 p-md-4">
@@ -53,6 +63,9 @@
                 pInputText
                 placeholder="Precio de compra"
               />
+            </div>
+            <div *ngIf="isInvalidField('purchase_price')">
+              <p-tag severity="danger" value="El precio es requerido"></p-tag>
             </div>
           </div>
         </div>
@@ -72,6 +85,9 @@
                 placeholder="Precio de venta"
               />
             </div>
+          </div>
+          <div *ngIf="isInvalidField('sale_price')">
+            <p-tag severity="danger" value="El precio es requerido"></p-tag>
           </div>
         </div>
         <div class="p-col-12 p-md-4">
@@ -105,6 +121,7 @@
         <div class="p-col-12 p-md-4">
           <div class="grid p-1 mt-1">
             <button
+              [disabled]="addGameForm.invalid"
               (click)="saveNewGame()"
               pButton
               type="button"

@@ -22,8 +22,8 @@ export class ServiceService {
     return this.http.get<IGameInfo[]>(`${environment.baseUrl}/soldGames`);
   }
 
-  getGameById(gameId: number): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.baseUrl}/games/${gameId}`);
+  getGameById(gameId: number): Observable<IGameInfo> {
+    return this.http.get<IGameInfo>(`${environment.baseUrl}/games/${gameId}`);
   }
 
   deleteKey(id: number) {
@@ -32,5 +32,11 @@ export class ServiceService {
 
   getKeyId(key: string): Observable<number> {
     return this.http.get<number>(`${environment.baseUrl}/getKeyId/${key}`);
+  }
+
+  saveGame(game: IGameInfo) {
+    return this.http.post<IGameInfo>(`${environment.baseUrl}/games/`, {
+      ...game,
+    });
   }
 }
