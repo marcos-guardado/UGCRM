@@ -24,7 +24,10 @@ export class StockComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.loadData();
+  }
 
+  loadData() {
     this.dataService
       .getGames()
       .pipe(
@@ -64,6 +67,7 @@ export class StockComponent implements OnInit {
           )
           .subscribe((x: any) => {
             alert('Key eliminada');
+            this.loadData();
           });
       },
       reject: () => {
